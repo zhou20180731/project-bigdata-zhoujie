@@ -99,7 +99,6 @@ SELECT
 FROM hive_sql_zg5.score_info
 ;
 
-
 SELECT
     count(stu_id) AS stu_cnt
 FROM (
