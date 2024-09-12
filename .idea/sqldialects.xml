@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/00-table-basic.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/01-basic-day01.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/02-basic-day02.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/03-basic-day03.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/04-basic-day04.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/05-basic-day05.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/raw_sql/01-basic-day01.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/raw_sql/02-basic-day02.sql" dialect="HiveQL" />
+    <file url="file://$PROJECT_DIR$/dataware-daily-sql/1-basic-sql/raw_sql/d1.sql" dialect="HiveQL" />
+  </component>
+</project>
