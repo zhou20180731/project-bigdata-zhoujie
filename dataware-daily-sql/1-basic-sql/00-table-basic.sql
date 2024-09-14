@@ -5,7 +5,6 @@ CREATE DATABASE IF NOT EXISTS hive_sql_zg5;
 -- 使用数据库
 USE hive_sql_zg5 ;
 
-
 select hive_sql_zg5;
 
 -- 创建学生表

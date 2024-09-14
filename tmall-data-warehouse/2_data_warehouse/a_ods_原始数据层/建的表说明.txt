@@ -1,0 +1,14 @@
+
+     todo :增量 4张表
+         todo: 1.订单详情表：order_detail（每日，增量）
+
+          todo: 5.订单明细购物券表：order_detail_coupon（每日，增量）
+            todo: 6.商品评论表：comment_info（每日，增量）
+              todo：7. 商品收藏表：favor_info（每日，增量）
+
+
+
+           todo 全量：
+           todo：2. 品牌表：base_trademark（每日，全量）
+            todo：3. 三级分类表：base_category3（每日，全量）
+                todo： 4. 二级分类表：base_category2（每日，全量）
