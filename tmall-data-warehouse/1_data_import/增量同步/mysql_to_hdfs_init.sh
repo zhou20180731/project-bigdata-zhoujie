@@ -13,6 +13,14 @@ else
   exit
 fi
 
+
+
+#用来检查第二个命令行参数（$2）是否已设置且非空。
+#如果 $2 非空（即用户确实传入了第二个参数），则条件为真，执行 then 后面的命令。
+#这是 if 语句的结束标志
+
+
+
 # 定义函数，类似方法，不需要显示指定参数个数类型：第1个参数为表名称，第2个参数为SQL语句
 import_data(){
   ${CMD} import \
@@ -254,7 +262,7 @@ import_coupon_use(){
                              used_time,
                              expire_time
                          FROM coupon_use
-                         WHERE date_format(create_time, '%Y-%m-%d') <= '${do_date}'"
+                         WHERE date_format(get_time, '%Y-%m-%d') <= '${do_date}'"
 }
 
 import_order_detail_activity(){
@@ -280,7 +288,6 @@ case $1 in
   "order_info")
     import_order_info
 ;;
-
   "payment_info")
     import_payment_info
 ;;
@@ -336,10 +343,10 @@ esac
 # sh mysql_to_hdfs_init.sh base_dic 2024-03-25
 #         $0                  $1        $2
 #
-# 同步所有表
+# 同步所有表  18/-18 历史同步
 # sh mysql_to_hdfs_init.sh all 2024-06-18
 # 同步某一张表
-# sh mysql_to_hdfs_init.sh order_detail 2024-03-31
+# sh mysql_to_hdfs_init.sh order_detail 2024-06-18
 #
 
 

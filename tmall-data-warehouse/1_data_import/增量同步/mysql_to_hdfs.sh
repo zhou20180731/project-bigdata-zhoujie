@@ -9,7 +9,7 @@ CMD=/opt/module/sqoop/bin/sqoop
 if [ -n "$2" ] ;then
   do_date=$2
 else
-  do_date=`date -d '-1 day' +%F`
+  do_date=$(date -d '-1 day' +%F)
 fi
 
 # 定义函数，类似方法，不需要显示指定参数个数类型：第1个参数为表名称，第2个参数为SQL语句
@@ -317,21 +317,22 @@ WHERE date_format(operate_time, '%Y-%m-%d') = '${do_date}'"
 
 # todo 每日同步表：cart_info
 import_cart_info(){
+  # shellcheck disable=SC2317
   import_data cart_info_inc "SELECT
         id,
-            user_id,
-            sku_id,
-            cart_price,
-            sku_num,
-            img_url,
-            sku_name,
-            is_checked,
-            create_time,
-            operate_time,
-            is_ordered,
-            order_time,
-            source_type,
-            source_id
+        user_id,
+        sku_id,
+        cart_price,
+        sku_num,
+        img_url,
+        sku_name,
+        is_checked,
+        create_time,
+        operate_time,
+        is_ordered,
+        order_time,
+        source_type,
+        source_id
 FROM cart_info
 WHERE (date_format(create_time, '%Y-%m-%d') = '${do_date}'
            OR date_format(operate_time, '%Y-%m-%d') = '${do_date}')"
@@ -543,7 +544,7 @@ import_coupon_use(){
                              used_time,
                              expire_time
                          FROM coupon_use
-                         WHERE date_format(create_time, '%Y-%m-%d') = '${do_date}'"
+                         WHERE date_format(get_time, '%Y-%m-%d') = '${do_date}'"
 }
 
 import_order_detail_activity(){
@@ -711,7 +712,7 @@ esac
 # 同步所有表
 # sh mysql_to_hdfs.sh all 2024-06-19
 # 同步某一张表
-# sh mysql_to_hdfs.sh order_detail 2024-03-31
+# sh mysql_to_hdfs.sh order_detail 2024-06-19
 #
 
 

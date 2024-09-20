@@ -1,0 +1,125 @@
+
+1、业务数据模拟生成（MySQL：gmall）
+    【mysql数据库在node101，所以命令执行在node101】
+    ========================= 第1次模拟数据 =========================
+        第1、修改配置文件
+            [bwie@node101 ~]$ vim /opt/module/db_log/application.properties
+                第16行
+                    mock.date=2024-09-11
+                第18，第20行
+                    mock.clear=1
+                    mock.clear.user=1
+        第2、模拟产生数据
+            [bwie@node101 ~]$ db.sh start
+
+    ========================= 第2次、第3次、....、模拟数据 =========================
+        第1、修改配置文件
+            [bwie@node101 ~]$ vim /opt/module/db_log/application.properties
+                第16行
+                    mock.date=2024-09-12
+                第18，第20行
+                    mock.clear=0
+                    mock.clear.user=0
+        第2、模拟产生数据
+            [bwie@node101 ~]$ db.sh start
+
+
+2、日志数据模拟生成
+        log-file        -- flume agent -->      kafka-topic    -- flume agent -->       hdfs-file
+            |                   |                   |                  |                    |
+      node101、node102     node101、node102        集群               node103               集群
+     |
+    【启动Zookeeper集群服务和Kafka集群服务，在node101上执行：zk.sh start、kfk.sh start】
+
+    第1、修改日期node101、node102
+        # 删除以前日志
+        [bwie@node101 ~]$ rm -rf /opt/module/applog/log/*
+        [bwie@node102 ~]$ rm -rf /opt/module/applog/log/*
+        # 编辑文件
+        [bwie@node101 ~]$ vim /opt/module/applog/application.yml
+        [bwie@node102 ~]$ vim /opt/module/applog/application.yml
+            第4行，修改日期
+            mock.date: "2024-09-11"
+
+    第2、启动Flume Agent
+        [bwie@node101 ~]$ f2.sh start
+        [bwie@node101 ~]$ f1.sh start
+
+    第3、模拟产生日志数据
+        [bwie@node101 ~]$ lg.sh start
+        [bwie@node101 ~]$ lg.sh start
+        [bwie@node101 ~]$ lg.sh start
+        [bwie@node101 ~]$ lg.sh start
+        [bwie@node101 ~]$ lg.sh start
+            产生日志数据，多次执行命令，比如执行5次以上
+
+    第4、其他日期数据模拟产生
+        执行第1、第3步即可
+
+
+    ========================= 查看node101或node102上Flume配置文件 =========================
+        [bwie@node101 ~]$ more /opt/module/flume/job/file_to_kafka.conf
+        [bwie@node102 ~]$ more /opt/module/flume/job/file_to_kafka.conf
+            #定义组件
+            a1.sources = r1
+            a1.channels = c1
+
+            #配置source
+            a1.sources.r1.type = TAILDIR
+            a1.sources.r1.filegroups = f1
+            a1.sources.r1.filegroups.f1 = /opt/module/applog/log/app.*
+            a1.sources.r1.positionFile = /opt/module/flume/job/taildir_position.json
+            a1.sources.r1.interceptors =  i1
+            a1.sources.r1.interceptors.i1.type = net.bwie.flume.interceptor.ETLInterceptor$Builder
+
+            #配置channel
+            a1.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
+            a1.channels.c1.kafka.bootstrap.servers = node101:9092,node102:9092,node103:9092
+            a1.channels.c1.kafka.topic = topic-log
+            a1.channels.c1.parseAsFlumeEvent = false
+
+            #组装
+            a1.sources.r1.channels = c1
+
+    ========================= 查看node103上Flume配置文件 =========================
+        [bwie@node103 ~]$ more /opt/module/flume/job/kafka_to_hdfs_log.conf
+            #定义组件
+            a1.sources=r1
+            a1.channels=c1
+            a1.sinks=k1
+
+            #配置source1
+            a1.sources.r1.type = org.apache.flume.source.kafka.KafkaSource
+            a1.sources.r1.batchSize = 5000
+            a1.sources.r1.batchDurationMillis = 2000
+            a1.sources.r1.kafka.bootstrap.servers = node101:9092,node102:9092,node103:9092
+            a1.sources.r1.kafka.topics = topic-log
+            a1.sources.r1.interceptors = i1
+            a1.sources.r1.interceptors.i1.type = net.bwie.flume.interceptor.TimestampInterceptor$Builder
+
+            #配置channel
+            a1.channels.c1.type = file
+            a1.channels.c1.checkpointDir = /opt/module/flume/checkpoint/behavior1
+            a1.channels.c1.dataDirs = /opt/module/flume/data/behavior1
+            a1.channels.c1.maxFileSize = 2146435071
+            a1.channels.c1.capacity = 1000000
+            a1.channels.c1.keep-alive = 6
+
+            #配置sink
+            a1.sinks.k1.type = hdfs
+            a1.sinks.k1.hdfs.path = hdfs://node101:8020/origin_data/gmall/log/%Y-%m-%d
+            a1.sinks.k1.hdfs.filePrefix = log
+            a1.sinks.k1.hdfs.round = false
+
+
+            a1.sinks.k1.hdfs.rollInterval = 10
+            a1.sinks.k1.hdfs.rollSize = 134217728
+            a1.sinks.k1.hdfs.rollCount = 0
+
+            #控制输出文件类型
+            a1.sinks.k1.hdfs.fileType = CompressedStream
+            a1.sinks.k1.hdfs.codeC = gzip
+
+            #组装
+            a1.sources.r1.channels = c1
+            a1.sinks.k1.channel = c1

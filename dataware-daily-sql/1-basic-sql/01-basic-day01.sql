@@ -112,9 +112,7 @@ FROM (
      FROM hive_sql_zg5.score_info
      GROUP BY stu_id
 ) t1
-
 ;
-
 
 /**
 -- 查询日志

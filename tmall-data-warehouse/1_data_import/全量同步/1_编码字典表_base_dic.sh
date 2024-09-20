@@ -25,6 +25,9 @@
 
 
 
+#将NULL值（空值）表示为文本。在这里，无论是字符串类型的字段还是非字符串类型的字段，NULL值都被表示为\\N
+#（注意这里使用了两个反斜杠，因为在命令行中，反斜杠本身需要被转义）。这个表示方法有助于在后续处理中识别出NULL值
+
 #CREATE TABLE `base_dic` (
 #  `dic_code` varchar(10) NOT NULL COMMENT '编号',
 #  `dic_name` varchar(100) DEFAULT NULL COMMENT '编码名称',

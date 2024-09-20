@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="308cedec-b67a-43fd-9ea5-c7c19a90e5cd" name="node101">
+        <fileTransfer accessType="SFTP" host="node101" port="22" sshConfigId="b8236839-b32e-4c23-9267-71d2d6cd5605" sshConfig="bwie@node101:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -3,6 +3,10 @@
 CREATE DATABASE IF NOT EXISTS gmall ;
 -- 使用数据库
 USE gmall;
+---导入数据进日志表中
+LOAD DATA INPATH '/origin_data/gmall/log/2024-09-11'
+    OVERWRITE INTO TABLE gmall.ods_log_inc  PARTITION(dt='2024-09-11');
+
 
 
 -- todo 1. 编码字典表：base_dic（每日，全量）

@@ -8,7 +8,7 @@
 
 
 
-           todo 全量：
-           todo：2. 品牌表：base_trademark（每日，全量）
-            todo：3. 三级分类表：base_category3（每日，全量）
-                todo： 4. 二级分类表：base_category2（每日，全量）
+             todo 全量：
+             todo：2. 品牌表：base_trademark（每日，全量）
+             todo：3. 三级分类表：base_category3（每日，全量）
+              todo： 4. 二级分类表：base_category2（每日，全量）

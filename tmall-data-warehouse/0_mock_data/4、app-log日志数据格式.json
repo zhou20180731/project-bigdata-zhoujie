@@ -1,0 +1,104 @@
+
+/*
+  app log 日志数据，完整json格式数据
+
+  hive -> map 集合数据 ： Struct结构体
+  hive -> list 列表数据： Array数组
+*/
+
+{
+  "common": {
+    "ar": "440000",
+    "ba": "Xiaomi",
+    "ch": "xiaomi",
+    "is_new": "0",
+    "md": "Xiaomi Mix2 ",
+    "mid": "mid_848207",
+    "os": "Android 11.0",
+    "uid": "417",
+    "vc": "v2.1.132"
+  },
+  "start": {
+    "entry": "install",
+    "loading_time": 7615,
+    "open_ad_id": 4,
+    "open_ad_ms": 1056,
+    "open_ad_skip_ms": 0
+  },
+  "actions": [
+    {
+      "action_id": "get_coupon",
+      "item": "1",
+      "item_type": "coupon_id",
+      "ts": 1726030244223
+    }
+  ],
+  "displays": [
+    {
+      "display_type": "activity",
+      "item": "1",
+      "item_type": "activity_id",
+      "order": 1,
+      "pos_id": 5
+    },
+    {
+      "display_type": "activity",
+      "item": "1",
+      "item_type": "activity_id",
+      "order": 2,
+      "pos_id": 5
+    },
+    {
+      "display_type": "query",
+      "item": "28",
+      "item_type": "sku_id",
+      "order": 3,
+      "pos_id": 4
+    },
+    {
+      "display_type": "query",
+      "item": "17",
+      "item_type": "sku_id",
+      "order": 4,
+      "pos_id": 5
+    },
+    {
+      "display_type": "recommend",
+      "item": "9",
+      "item_type": "sku_id",
+      "order": 5,
+      "pos_id": 5
+    },
+    {
+      "display_type": "promotion",
+      "item": "20",
+      "item_type": "sku_id",
+      "order": 6,
+      "pos_id": 5
+    },
+    {
+      "display_type": "query",
+      "item": "1",
+      "item_type": "sku_id",
+      "order": 7,
+      "pos_id": 1
+    },
+    {
+      "display_type": "query",
+      "item": "32",
+      "item_type": "sku_id",
+      "order": 8,
+      "pos_id": 1
+    }
+  ],
+  "page": {
+    "during_time": 4127,
+    "page_id": "home"
+  },
+  "err": {
+    "error_code": 2198,
+    "msg": " Exception in thread \\  java.net.SocketTimeoutException\\n \\tat com.atgugu.gmall2020.mock.bean.log.AppError.main(AppError.java:xxxxxx)"
+  },
+  "ts": 1726030234000
+}
+

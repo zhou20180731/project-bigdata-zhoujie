@@ -1,0 +1,34 @@
+
+
+第一周：6天，从项目出发，到数据同步、ODS层开发及维度建模DIM和DWD层开发，核心重难点：
+
+	1. Sqoop 数据同步导入HDFS时，数据量大及失败
+		--num-mappers 任务数
+		--split-by 数据分割字段
+
+		增量表数据同步，分为多个阶段，比如每日数据分为4个批次增量同步
+			map-task1：00 - 07
+			map-task2：07 - 12
+			map-task3：12 - 17
+			map-task4：17 - 00
+			sqoop import 导入时，通过--query 执行SELECT查询语句，获取数据，其中设置where条件
+
+	2. 数据同步HDFS，加载到ODS层，数据重复
+		使用row_number给数据加序号，获取最新数据，进行去重
+		step1. 主键 分区partition by，数据更新时间 降序order by
+		step2. 获取序号rnk=1数据
+
+		现象：DWD层事实表和DIM层维度数据有重复，后续数据汇总或指标统计，结果不对
+
+	3. 历史数据加载DWD和DIM层，动态分区
+		从ODS层获取历史数据，插入DWD层表，启动动态分区和非严格模式，自动将数据写入对应分区
+		INSERT OVERWRITE 覆盖插入，不是INSERT INTO，避免重跑任务时，导致数据重复
+
+	4. 用户维度存储，数据量大，但是新增修改少，并需要查询历史数据
+		【缓慢变化维，拉链表】
+		设计：数据声明周期字段
+			start_date、end_date
+		思路：
+			前一天历史数据 拉链 当日最新数据
+
+			union合并，row_number加序号，判断最新数据和过期数据，修改end_date
